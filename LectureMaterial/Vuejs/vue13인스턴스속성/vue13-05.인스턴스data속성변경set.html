@@ -100,7 +100,12 @@
     </xmp>
     <hr>
     <div id="app">
-        <span v-for="(val, i) in arr" v-bind:key="i"> {{val}} </span>
+        <span 
+            v-for="(val, i) in arr" 
+            v-bind:key="i"
+        > 
+            {{val}} 
+        </span>
         <br>
         <button v-on:click="change1">방법1로 변경</button>
         <button v-on:click="change2">방법2로 변경</button>
@@ -110,3 +115,45 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+
+<script>
+    new Vue({
+    /* edtmc^2w */
+    el: '#app',
+    data: {
+        /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+        /* data 프로퍼티 값 변경시 this.set(object, key, value) 을 사용 */
+        arr: [1, 2, 3, 4, 5]
+    },
+    methods: {
+        /* 이벤트 핸들러 등록 + 일반 함수 **/
+        change1(e) {
+            console.log(e.target);
+            debugger;
+            // this.$data.arr[0] = 100;
+            this.$set(this.$data.arr, 0, 100);
+            console.log(this.$data.arr);
+        },
+        change2(e) {
+            console.log(e.target);
+            debugger;
+            // this.$data.arr[1] = 300;
+            Vue.set(this.$data.arr, 1, 300);
+            console.log(this.$data.arr);
+        },
+        change3(e) {
+            console.log(e.target);
+            this.$data.arr.splice(0, 2);
+            console.log(this.$data.arr);
+        },
+        change4(e) {
+            console.log(e.target);
+            this.$data.arr = [500, ...this.$data.arr, 70];
+            console.log(this.$data.arr);
+        },
+    },
+});
+</script>
