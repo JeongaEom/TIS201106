@@ -1,65 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible"
-      content="ie=edge" />
-    <title>Document</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
 
-    <link rel="stylesheet"
-      href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/reset.css" />
 
-  </head>
+</head>
 
-  <body>
-    <xmp>
-        함수형 컴포넌트를 만드는 방법을 복습한다.
+<body>
+  <xmp>
+    함수형 컴포넌트를 만드는 방법을 복습한다.
 
-        컴포넌트 이름을 HelloReact로 만들고 "Hello, React!!!"를 출력하시오.
+    컴포넌트 이름을 HelloReact로 만들고 "Hello, React!!!"를 출력하시오.
 
-        만들 Component
-            HelloContainer
-            HelloReact
+    만들 Component
+    HelloContainer
+    HelloReact
 
-        HelloContainer JSX
-            <HelloReact mesgOfProps={"Hello, Props!!!"}>
+    HelloContainer JSX
 
-            </HelloReact>
 
-        HelloReact JSX 화면
-            <div>
-                도전1. Hello, React!!!
-                <br />
-                도전2. {mesgOfState}
-                <br />
-                도전3. {mesgOfProps}
-            </div>
-
-        실행 화면
-            <div>
-                도전1. Hello, React!!!
-                <br>
-                도전2. Hello, State!!!
-                <br>
-                도전3. Hello, Props!!!
-                <hr />
-                <button onClick={????}> 부모의 callback 메서드 호출</button>
-            </div>
-
-        도전. 부모의 callback 메서드 호출 기능을 추가한다.
-            <hr />
-            <button onClick={????}> 부모의 callback 메서드 호출</button>
-    </xmp>
-    <hr>
-
-    <div id="app">
-      요기에
+    HelloReact JSX 화면
+    <div>
+      도전1. Hello, React!!!
+      <br />
+      도전2. {mesgOfState}
+      <br />
+      도전3. {mesgOfProps}
     </div>
-  </body>
+
+    실행 화면
+    <div>
+      도전1. Hello, React!!!
+      <br>
+      <HelloReact mesgOfProps={"Hello, Props!!!"}>
+
+      </HelloReact>
+      도전2. Hello, State!!!
+      <br>
+      도전3. Hello, Props!!!
+      <hr />
+      <button onClick={????}> 부모의 callback 메서드 호출</button>
+    </div>
+
+    도전. 부모의 callback 메서드 호출 기능을 추가한다.
+    <hr />
+    <button onClick={????}> 부모의 callback 메서드 호출</button>
+  </xmp>
+  <hr>
+
+  <div id="app">
+    요기에
+  </div>
+</body>
 
 </html>
 
 
+<script src="https://unpkg.com/@babel/standalone/babel.js" crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+</script>
+<script src="http://unpkg.com/react@17/umd/react.development.js" crossorigin="anonymous">
+  /* import React, { Component, PureComponent } from 'react' */
+</script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin="anonymous">
+  /* import ReactDOM from 'react-dom' */
+</script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  ReactDOM.render(<HelloContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+
+
+  function HelloContainer({ ...props }) {
+    const [mesgOfProps, setMesgOfProps] = useState('Hello, Props!!!');
+    // 이벤트 핸들러 작성.
+
+    // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
+    const callback = useCallback((param) => {
+      // state 변경
+      // debugger;
+      setMesgOfProps('click callback method')
+    }, [
+      /* 연관배열: callback 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술 */
+      mesgOfProps
+    ]);
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <HelloReact mesgOfProps={mesgOfProps} callback={callback}>
+      </HelloReact>
+    )
+  }
+
+  // { ...props } = { mesgOfProps: "Hello, Props!!!", callback }
+  // { mesgOfProps, callback } = { mesgOfProps: "Hello, Props!!!", callback }
+  function HelloReact({ mesgOfProps, callback }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [mesgOfState, setMesgOfState] = useState('Hello, State!!!!'); // 상태값이 기본타입인 경우
+
+    // 이벤트 핸들러 작성.
+    const handler = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      // 부모의 callback 메서드 호출
+      // debugger;
+      callback();
+    };
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div>
+        도전1. Hello, React!!!
+        <br />
+        도전2. {mesgOfState}
+        <br />
+        도전3. {mesgOfProps}
+        <hr />
+        <button onClick={handler}> 부모의 callback 메서드 호출</button>
+      </div>
+    )
+  }
+</script>

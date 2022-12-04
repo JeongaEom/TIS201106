@@ -839,19 +839,19 @@
         state.todoItems = newTodos;
         },
         addTodo(state/* 고정 */, newTodoItem){
-        /* ...중략. 직접 작성 */
+            /* ...중략. 직접 작성 */
 
-        // max id 구하기 ==> map과 reduce 를 사용하여
-        // todoItems 추가할 객체 만들기
-        // 배열에 추가
-        let maxid = 0;
-        if (state.todoItems.length > 0) {
-        maxid = state.todoItems
-        .map((item) => item.id)
-        .reduce((pvalue, cvalue) => {
-        if (pvalue > cvalue) return pvalue;
-        else return cvalue;
-        });
+            // max id 구하기 ==> map과 reduce 를 사용하여
+            // todoItems 추가할 객체 만들기
+            // 배열에 추가
+            let maxid = 0;
+            if (state.todoItems.length > 0) {
+            maxid = state.todoItems
+            .map((item) => item.id)
+            .reduce((pvalue, cvalue) => {
+            if (pvalue > cvalue) return pvalue;
+            else return cvalue;
+            });
         }
 
         const newTodo = {

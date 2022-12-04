@@ -1,0 +1,4 @@
+
+
+react 단축키:
+  reactplugin : .html 파일에서 사용

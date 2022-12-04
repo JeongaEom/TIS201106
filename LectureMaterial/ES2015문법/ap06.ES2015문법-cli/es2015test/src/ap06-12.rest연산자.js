@@ -12,3 +12,17 @@
     rest 연산자(...)를 사용하여 함수의 매개변수를 작성한 형태다.
     함수의 매개변수로 넘어오는 값들을 "배열"로 만든다.
 */
+
+// ...args에서 ...를 rest 연산자라로 부른다
+// arguments를 대체 가능
+function greet(...args) {
+  // 가변매개변수를 이용한 출력
+  console.log('가변매개변수(rest연산자)', args);
+
+  // arguments를 사용하여 출력
+  console.log('arguments >>', arguments);
+  console.log('\n\n');
+}
+greet(); //
+greet('Elise'); // Elise
+greet('Mike', 'Hi'); // Mik, Hi

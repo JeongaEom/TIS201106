@@ -19,7 +19,7 @@
         iterator를 생성해서 next()로 순회할 수 있는 자료구조가 이터러블
 
 */
-const cities = ["서울", "부산", "제주"];
+const cities = ['서울', '부산', '제주'];
 
 // 배열 요소를 변수로 만드시오, x, y, z
 const x = cities[0];
@@ -33,11 +33,50 @@ console.log(...cities);
 
 // spread 연산자는 기존의 값을 이용하여 새로운 값을 만들때 사용 된다.
 // 복제된 배열, 복제된 객체
-const east = ["U", "K", "T"];
-const west = ["N", "C", "G"];
+const east = ['U', 'K', 'T'];
+const west = ['N', 'C', 'G'];
 
 // const countries = ['U', 'K', 'T', 'N', 'C', 'G'];
 console.log(east.concat(west));
 
 const countries = [...east, ...west];
 console.log(countries);
+
+// 객체에서의 스프레드 연산자 사용법을 익힌다.
+
+const car1 = {
+  type: 't1',
+  color: 's1',
+  model: 2017,
+};
+
+const car2 = {
+  type: 't2',
+  color: 's2',
+   
+  model: 2019,
+};
+
+const { type } = car1;
+console.log(type); // car1
+
+// {type} = {...car1, ...car2}
+const func = function ({ type }) {
+  console.log(type); // type 값은 무엇인가?
+};
+func({ ...car1, ...car2 });
+
+// ===> 불변객체의 복제 후 할당
+
+const moring = {
+  breacfast: '미역국',
+  lunuch: '삼치구이',
+};
+
+const dinner = '스테이크';
+
+const meals = {
+  ...moring,
+  dinner, // dinner: dinner,
+};
+console.log(meals); // { breacfast: '미역국', lunuch: '삼치구이', dinner: '스테이크' }
